@@ -44,16 +44,14 @@ LinkedList.prototype.addToHead = function(element) {
     }
     //set the head to the new node
     this.head = newNode;
-}
+};
 
 /*
 var foodList = new LinkedList();
-var pizzaNode = new Node("pizza");
-foodList.addToHead(pizzaNode);
+foodList.addToHead("pizza");
 console.log(foodList);
 
-var spinachNode = new Node("Spinach");
-foodList.addToHead(spinachNode)
+foodList.addToHead("Spinach")
 console.log(foodList);
 */
 
@@ -75,8 +73,50 @@ LinkedList.prototype.addToTail = function(element) {
     }
 
     this.tail = newNode;
-}
+};
 
-var pastaNode = new Node("Pasta");
-foodList.addToTail(pastaNode);
+/*
+foodList.addToTail("Pasta");
 console.log(foodList);
+*/
+
+LinkedList.prototype.removeHead = function() {
+    //if there is a head, then there is a node or nodes in the list
+    if(this.head) {
+
+        //save the current value of the head
+        var value = this.head.element;
+
+        //case 1: there are multiple nodes
+        if(this.head.next != null) { 
+            var temp = this.head;
+            // there is another node so set that to the head
+            this.head = this.head.next;
+            //set the temp (previous) to null
+            temp = null;
+        } else { 
+            //this.head.next is a null, means there is only one node
+            this.head = null;
+            this.tail = null;
+        }
+    } else {
+        //there is no head OR !this.head... So linked list is empty
+        return null;
+    }
+
+    return value;
+};
+
+//Test remove addToHead
+
+var foodList = new LinkedList();
+foodList.addToHead("pizza");
+foodList.addToHead("Spinach");
+foodList.addToHead("Corn");
+console.log(foodList);
+
+/*
+LinkedList.prototype.removeHead = function() {
+
+};
+*/
