@@ -81,8 +81,9 @@ console.log(foodList);
 */
 
 LinkedList.prototype.removeHead = function() {
-    //if there is a head, then there is a node or nodes in the list
-    if(this.head) {
+    //if there is a head, then there is a node or possibly nodes in the list
+    var thereIsAHead = this.head;
+    if(thereIsAHead) {
 
         //save the current value of the head
         var value = this.head.element;
