@@ -7,7 +7,7 @@ function LinkedList() {
     this.head = null;
     this.tail = null; // you can choose not to add tail
 
-    var length = 0;
+    this._length = 0;
 }
 
 /*
@@ -31,6 +31,14 @@ LinkedList.prototype = {
     display: function() {}
 };
 
+LinkedList.prototype.size = function() {
+    return "LinkedList Size Is: " + this._length;
+};
+
+LinkedList.prototype.isEmpty = function() {
+    return this._length === 0;
+};
+
 LinkedList.prototype.addToHead = function(element) {
     //create a new Node
     var newNode = new Node(element);
@@ -44,6 +52,9 @@ LinkedList.prototype.addToHead = function(element) {
     }
     //set the head to the new node
     this.head = newNode;
+
+    //increment count
+    this._length++;
 };
 
 /*
@@ -73,6 +84,8 @@ LinkedList.prototype.addToTail = function(element) {
     }
 
     this.tail = newNode;
+    //increment count
+    this._length++;
 };
 
 /*
@@ -82,8 +95,8 @@ console.log(foodList);
 
 LinkedList.prototype.removeHead = function() {
     //if there is a head, then there is a node or possibly nodes in the list
-    var thereIsAHead = this.head;
-    if(thereIsAHead) {
+    var headExists = this.head;
+    if(headExists) {
 
         //save the current value of the head
         var value = this.head.element;
@@ -100,6 +113,8 @@ LinkedList.prototype.removeHead = function() {
             this.head = null;
             this.tail = null;
         }
+        //since headExists
+        this._length--;
     } else {
         //there is no head OR !this.head... So linked list is empty
         return null;
@@ -114,6 +129,7 @@ var foodList = new LinkedList();
 foodList.addToHead("pizza");
 foodList.addToHead("Spinach");
 foodList.addToHead("Corn");
+foodList.size();
 console.log(foodList);
 
 /*
