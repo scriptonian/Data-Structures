@@ -128,8 +128,9 @@ LinkedList.prototype.removeHead = function() {
 var foodList = new LinkedList();
 foodList.addToHead("pizza");
 foodList.addToHead("Spinach");
-foodList.addToHead("Corn");
-foodList.size();
+foodList.addToHead("Pasta");
+foodList.removeHead();
+//foodList.size();
 console.log(foodList);
 
 /*
