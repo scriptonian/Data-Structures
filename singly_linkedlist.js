@@ -32,6 +32,7 @@ LinkedList.prototype = {
 };
 
 LinkedList.prototype.size = function() {
+    console.log("size called")
     return "LinkedList Size Is: " + this._length;
 };
 
@@ -124,17 +125,73 @@ LinkedList.prototype.removeHead = function() {
 };
 
 //Test remove addToHead
-
+/*
 var foodList = new LinkedList();
 foodList.addToHead("pizza");
 foodList.addToHead("Spinach");
 foodList.addToHead("Pasta");
 foodList.removeHead();
-//foodList.size();
+foodList.size();
 console.log(foodList);
+*/
 
-/*
-LinkedList.prototype.removeHead = function() {
+LinkedList.prototype.find = function(item) {
 
+    var currentNode = this.head;
+    while(currentNode) {
+        if(currentNode.element === item) {
+            return currentNode;
+        }
+        currentNode = currentNode.next;
+    }
+    return null;
+
+    /*
+    //Another way to write this is
+    var currentNode = this.head;
+    while(currentNode.element != item){
+        currentNode = currentNode.next;
+    }
+    return currentNode;
+    */
 };
+
+LinkedList.prototype.display = function() {
+    var currentNode = this.head;
+    while(currentNode) {
+        console.log(currentNode.element);
+        currentNode = currentNode.next;
+    }
+};
+
+LinkedList.prototype.insert = function(position, element) {
+    //create the new node based on the name passed
+    var newNode = new Node(element);
+    //find the position or item node we want to insert after.
+    var positionNode = this.find(position);
+    //if the position node is found update pointers
+    if (positionNode != null) {
+        //first set the next pointer of new node to be that of position nodes next
+        newNode.next = positionNode.next;
+        //finally update the positionNode's next to be the new node
+        positionNode.next = newNode;
+        this._length++;
+    } else {
+        //position not found, return error
+        throw new Error("Position Node Doesnt Exist!")
+    }
+};
+
+//Testing insert
+/*
+var peopleList = new LinkedList();
+peopleList.addToTail("Kofi");
+peopleList.addToTail("Tani");
+peopleList.addToTail("Julie");
+peopleList.insert("Tani", "Tarik");
+peopleList.insert("Julie", "Charles");
+peopleList.insert("Ben", "James");
+peopleList.size();
+peopleList.display();
+console.log(peopleList);
 */
