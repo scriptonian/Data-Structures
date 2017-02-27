@@ -22,6 +22,7 @@ LinkedList.prototype = {
     addToTail: function(element) {},
     insert: function(position, element) {},
     find: function(element) {},
+    findPrevious: function(element) {},
     removeHead: function() {},
     removeTail: function() {},
     delete: function(position) {},
@@ -32,7 +33,6 @@ LinkedList.prototype = {
 };
 
 LinkedList.prototype.size = function() {
-    console.log("size called")
     return "LinkedList Size Is: " + this._length;
 };
 
@@ -135,8 +135,53 @@ foodList.size();
 console.log(foodList);
 */
 
-LinkedList.prototype.find = function(item) {
+LinkedList.prototype.findPrevious = function(item) {
+    //start search from the beginning
+    var currentNode = this.head;
 
+    while(currentNode.next != null) {
+        if(currentNode.next == item) {
+            return currentNode;
+        }
+        currentNode = currentNode.next
+    }
+    return currentNode;
+};
+
+LinkedList.prototype.removeTail = function() {
+    var previousNode = this.findPrevious(this.tail);
+
+    /*
+    Two things are possible if there is a previous node.
+        1) there is only one node in the linked list
+        2) there are multiple nodes
+    */
+
+    //case 1. there is only one node because next is null
+    if(previousNode.next === null) {
+        //reset both head and tail to null
+        this.head = null;
+        this.tail = null;
+    } else { //case 2 (multiple nodes)
+        //update the next node (tail) to be null
+        previousNode.next = null;
+        //set the previousNode as the new tail
+        this.tail = previousNode;
+    }
+
+    this._length--;
+};
+/*
+var numList = new LinkedList();
+numList.addToTail("100");
+numList.addToTail("200");
+numList.addToTail("300");
+numList.addToTail("400");
+numList.removeTail();
+numList.display();
+*/
+
+LinkedList.prototype.find = function(item) {
     var currentNode = this.head;
     while(currentNode) {
         if(currentNode.element === item) {
@@ -145,7 +190,6 @@ LinkedList.prototype.find = function(item) {
         currentNode = currentNode.next;
     }
     return null;
-
     /*
     //Another way to write this is
     var currentNode = this.head;
@@ -178,7 +222,7 @@ LinkedList.prototype.insert = function(position, element) {
         this._length++;
     } else {
         //position not found, return error
-        throw new Error("Position Node Doesnt Exist!")
+        throw new Error("Position Node Doesnt Exist!");
     }
 };
 
