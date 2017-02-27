@@ -239,3 +239,11 @@ peopleList.size();
 peopleList.display();
 console.log(peopleList);
 */
+
+LinkedList.prototype.delete = function(position) {
+
+};
+
+LinkedList.prototype.indexOf = function(element) {
+
+};
