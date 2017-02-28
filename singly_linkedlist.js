@@ -245,5 +245,15 @@ LinkedList.prototype.delete = function(position) {
 };
 
 LinkedList.prototype.indexOf = function(element) {
-
+    var currentNode = this.head,
+        index = 0;
+    
+    while(currentNode) {
+        if(currentNode.element === element) {
+            return index;
+        }
+        index++;
+        currentNode = currentNode.next;
+    }
+    return -1;
 };
