@@ -25,7 +25,8 @@ LinkedList.prototype = {
     findPrevious: function(element) {},
     removeHead: function() {},
     removeTail: function() {},
-    delete: function(position) {},
+    remove: function(element) {},
+    removeAt: function(position) {},
     indexOf: function(element) {},
     isEmpty: function() {},
     size: function() {},
@@ -240,10 +241,6 @@ peopleList.display();
 console.log(peopleList);
 */
 
-LinkedList.prototype.delete = function(position) {
-
-};
-
 LinkedList.prototype.indexOf = function(element) {
     var currentNode = this.head,
         index = 0;
@@ -257,3 +254,39 @@ LinkedList.prototype.indexOf = function(element) {
     }
     return -1;
 };
+
+LinkedList.prototype.removeAt = function(position) {
+    var length = this._length - 1;
+    //check removal bounds
+    if(position > -1 && position <= length) {
+        var currentNode = this.head,
+            currentIndex = 0;
+        //if position is 0 then it means remove from Head. 
+        if(position === 0) {
+            //means remove the head and returns what was removed
+            return this.removeHead();
+        }
+        //if its not the head then search for the node in the list.
+        //being from head.
+        while(currentNode) { //as long as there is a next node (you know the previous)
+            console.log("current index: " + currentIndex);
+            if(currentIndex != position) {
+                currentNode = currentNode.next;
+                currentIndex++;
+            } else { // there is a match
+                console.log('match found at: ' + currentIndex);
+
+                return;
+            }
+        }
+    } else {
+        return null;
+    }
+};
+
+LinkedList.prototype.remove = function(element) {
+    //find element to remove index
+    var elementIndex = this.indexOf(element);
+    return this.removeAt(elementIndex)
+};
+
