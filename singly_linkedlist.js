@@ -150,7 +150,8 @@ LinkedList.prototype.findPrevious = function(item) {
 };
 
 LinkedList.prototype.removeTail = function() {
-    var previousNode = this.findPrevious(this.tail);
+    var previousNode = this.findPrevious(this.tail),
+        tempTail = this.tail; //store a reference to the present tail
 
     /*
     Two things are possible if there is a previous node.
@@ -171,6 +172,9 @@ LinkedList.prototype.removeTail = function() {
     }
 
     this._length--;
+
+    //return the name of tail removed to called (we would be nice to know what was removed)
+    return tempTail.element;
 };
 /*
 var numList = new LinkedList();
@@ -257,26 +261,36 @@ LinkedList.prototype.indexOf = function(element) {
 
 LinkedList.prototype.removeAt = function(position) {
     var length = this._length - 1;
-    //check removal bounds
+    //check removal bounds. check if position is valid
     if(position > -1 && position <= length) {
         var currentNode = this.head,
-            currentIndex = 0;
-        //if position is 0 then it means remove from Head. 
+            currentIndex = 0,
+            nextIndex = currentIndex + 1;
+        //if position is 0 then it means remove from Head. no need to reach loop
         if(position === 0) {
             //means remove the head and returns what was removed
             return this.removeHead();
         }
-        //if its not the head then search for the node in the list.
+        if(position === length) {
+            return this.removeTail();
+        }
+        //if its not the head or tail then search inbetween linked list.
         //being from head.
-        while(currentNode) { //as long as there is a next node (you know the previous)
+        while(currentNode) { 
             console.log("current index: " + currentIndex);
-            if(currentIndex != position) {
+            //if the next is equal to position then update the current header
+            if(nextIndex === position) {
+                console.log('match found at: ' + currentIndex);
+                //set the current next to pointer to the nexts next.
+                var temp = currentNode.next.next;
+                //set temp to null
+                currentNode.next = null;
+                //finally set the current next to the object
+                currentNode.next = temp;
+                return currentNode;
+            } else { // there is a match
                 currentNode = currentNode.next;
                 currentIndex++;
-            } else { // there is a match
-                console.log('match found at: ' + currentIndex);
-
-                return;
             }
         }
     } else {
