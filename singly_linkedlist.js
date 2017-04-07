@@ -34,7 +34,7 @@ LinkedList.prototype = {
 };
 
 LinkedList.prototype.size = function() {
-    return "LinkedList Size Is: " + this._length;
+    return this._length;
 };
 
 LinkedList.prototype.isEmpty = function() {
