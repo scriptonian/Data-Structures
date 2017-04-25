@@ -49,3 +49,26 @@ DoublyLinkedList.prototype.addToHead = function(element) {
     //increment count
     this._length++;
 };
+
+DoublyLinkedList.prototype.addToTail = function(element) {
+    //create a new Node
+    var newNode = new Node(element);
+    // Handle case for when linked list is not empty
+    if (this.tail) {
+        //if there is already a tail, change the pointers to point to new node
+        //if update the currently existing tails next to point to new node
+        this.tail.next = newNode;
+        newNode.prev = this.tail;
+        //then finally update the linked list tail to be the new node
+        //this.tail = newNode;
+    } else {
+        //if there is no tail, then there is no head
+        this.head = newNode
+        //if there is no tail. make LinkedList tail the new node
+        //this.tail = newNode;
+    }
+
+    this.tail = newNode;
+    //increment count
+    this._length++;
+};
