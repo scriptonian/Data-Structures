@@ -133,3 +133,91 @@ DoublyLinkedList.prototype.removeTail = function() {
     return value;
 };
 
+//this finds and items based on name of element
+DoublyLinkedList.prototype.find = function(item) {
+    var currentNode = this.head;
+    while(currentNode) {
+        if(currentNode.element === item) {
+            return currentNode;
+        }
+        currentNode = currentNode.next;
+    }
+    return null;
+};
+
+//Updated insert method. (i prefer the enhanced insert see below)
+DoublyLinkedList.prototype.insert = function(position, element) {
+   //create the new node based on the name passed
+   var newNode = new Node(element);
+   //find the position or item node we want to insert after.
+   var positionNode = this.find(position);
+   //if the position node is found update pointers
+   if (positionNode != null) {
+     //first set the next pointer of new node to be that of position nodes next.
+     //since the new node has no next and previous, we use the position nodes next/prev
+     newNode.next = positionNode.next;
+     //update the previous pointer in doubly linked list
+     newNode.previous = positionNode;
+     //finally update the positionNode's next to be the new node
+     positionNode.next = newNode;
+
+     this._length++;
+   } else {
+     //position not found, return error
+     throw new Error("Position Node Doesnt Exist!");
+   }
+};
+
+DoublyLinkedList.prototype.withinBounds = function(position, length) {
+    return (position > -1 && position <= length);
+}
+
+//this is very similar to the find method. i would refactor this method so there is only one find method
+// you can perhaps do a type check. if passed in parameter is a string or number.
+DoublyLinkedList.prototype.findPositionNode = function(position) {
+    var currentNode, index = 0;
+    currentNode = this.head;
+    
+    while(currentNode) {
+        if(position === index) {
+            return currentNode;
+        }
+        currentNode = currentNode.next;
+        index++;
+    }
+    return null;
+}
+
+//NEW INSERT METHOD
+DoublyLinkedList.prototype.insertEnhanced = function(position, element) {
+    var length = this._length - 1,
+        positionNode,
+        withinBounds = this.withinBounds(position, length);
+        
+    if(withinBounds) {
+        //create the new node based on the name passed
+        var newNode = new Node(element),
+            currentNode = this.head,
+            currentIndex = 0;
+
+        //if position is 0 then it means remove from Head. no need to reach loop
+        if(position === 0) {
+            //means remove the head and returns what was removed
+            return this.removeHead();
+        } else if(position === length) {
+            //remove the tail
+            return this.removeTail();
+        }  else {
+            //its not the head or tail, in which case we loop thru the collection
+            //to find the position
+            positionNode = this.findPositionNode(position);
+            console.log('position node is : ' + positionNode.element);
+            if(positionNode !== null){
+                //we have the position node, lets update the pointers
+            }
+        }
+    } else { //not within bounds
+        throw new Error('Position Not Within Bounds');
+        return null;
+    }
+}
