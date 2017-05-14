@@ -203,21 +203,25 @@ DoublyLinkedList.prototype.insertEnhanced = function(position, element) {
         //if position is 0 then it means remove from Head. no need to reach loop
         if(position === 0) {
             //means remove the head and returns what was removed
-            return this.removeHead();
+            return this.addToHead();
         } else if(position === length) {
             //remove the tail
-            return this.removeTail();
+            return this.addToTail();
         }  else {
             //its not the head or tail, in which case we loop thru the collection
             //to find the position
+            console.log('position node is : ' + positionNode.element);            
             positionNode = this.findPositionNode(position);
-            console.log('position node is : ' + positionNode.element);
             if(positionNode !== null){
                 //we have the position node, lets update the pointers
+                newNode.next = positionNode.next;
+                //update the previous pointer in doubly linked list
+                newNode.previous = positionNode;
+                //finally update the positionNode's next to be the new node
+                positionNode.next = newNode;
             }
         }
     } else { //not within bounds
         throw new Error('Position Not Within Bounds');
-        return null;
     }
 }
