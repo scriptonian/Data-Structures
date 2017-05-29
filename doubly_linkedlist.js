@@ -15,6 +15,7 @@ DoublyLinkedList.prototype = {
     addToHead: function(element) {},
     addToTail: function(element) {},
     insert: function(position, element) {},
+    insertEnhanced : function(position, element){},
     find: function(element) {},
     findPrevious: function(element) {},
     removeHead: function() {},
@@ -210,8 +211,8 @@ DoublyLinkedList.prototype.insertEnhanced = function(position, element) {
         }  else {
             //its not the head or tail, in which case we loop thru the collection
             //to find the position
-            console.log('position node is : ' + positionNode.element);            
             positionNode = this.findPositionNode(position);
+            console.log('position node is : ' + positionNode.element);
             if(positionNode !== null){
                 //we have the position node, lets update the pointers
                 newNode.next = positionNode.next;
@@ -219,9 +220,74 @@ DoublyLinkedList.prototype.insertEnhanced = function(position, element) {
                 newNode.previous = positionNode;
                 //finally update the positionNode's next to be the new node
                 positionNode.next = newNode;
+                //update length
+                this._length++;
             }
         }
     } else { //not within bounds
         throw new Error('Position Not Within Bounds');
     }
 }
+
+//Testing insert
+/*
+var peopleList = new DoublyLinkedList();
+peopleList.addToTail("Kofi");
+peopleList.addToTail("Tani");
+peopleList.addToTail("Julie");
+peopleList.addToTail("Tani");
+peopleList.addToTail("Ben");
+peopleList.insertEnhanced(3, "Tarik");
+peopleList.insert("Julie", "Charles");
+peopleList.insert("Ben", "James");
+console.log(peopleList);
+*/ 
+
+
+DoublyLinkedList.prototype.removeAt = function(position) {
+    var length = this._length - 1,
+        positionNode,
+        withinBounds = this.withinBounds(position, length);
+        
+    if(withinBounds) {
+        //if position is 0 then it means remove from Head. no need to reach loop
+        if(position === 0) {
+            //means remove the head and returns what was removed
+            return this.removeHead();
+        } else if(position === length) {
+            //remove the tail
+            return this.removeTail();
+        }  else {
+            //find the node you want to delete
+            positionNode = this.findPositionNode(position);
+            // if position node is found update the pointers
+            if(positionNode !== null) {
+                positionNode.previous.next = positionNode.next;
+                positionNode.next.previous = positionNode.previous;
+                //remove the pointers from the node marked for deletion
+                var temp = positionNode;
+                positionNode.next = null;
+                positionNode.previous = null;
+                //update length
+                this._length--;
+
+                //you dont have to do this. return node object to caller (just incase they want to do something else with it)
+                //if not garbage collection will deal with this
+                return temp;
+            }
+        }
+    } else { //not within bounds
+        throw new Error('Position Not Within Bounds');
+    }    
+}
+
+/*
+var peopleList = new DoublyLinkedList();
+peopleList.addToTail("Kofi");
+peopleList.addToTail("Tani");
+peopleList.addToTail("Julie");
+peopleList.addToTail("Tani");
+peopleList.addToTail("Ben");
+peopleList.removeAt(1);
+
+*/
