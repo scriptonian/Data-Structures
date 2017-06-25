@@ -11,7 +11,7 @@ class Stack {
 
     pop() {
         //remove item at the top of the stack
-        this.items.pop();
+        return this.items.pop();
     }
 
     peek() {
@@ -33,6 +33,11 @@ class Stack {
     clear() {
         //remove all items from the stack
         this.items = [];
+    }
+
+    toString () {
+        //return an output of everything in the items array
+        return this.items.toString();
     }
 }
 
