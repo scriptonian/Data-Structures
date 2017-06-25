@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Stack Factorial</title>
+    </head>
+    <body>
+
+        <script type="text/javascript" src="../stack.js"></script>
+        <script type="text/javascript">
+            function factorial(number) {
+                var stack = new Stack(),
+                    stackSize,
+                    total = 1;
+                //push the factorial numbers onto the stack
+                while (number > 0) {
+                    stack.push(number);
+                    number--;
+                }
+                //now that everything is on the stack, pop it off and do multiplication
+                stackSize = stack.size();
+                for(var i = stackSize; i > 0; i--) {
+                    total *= stack.pop();
+                }
+
+                return total;
+            }
+
+            var result = factorial(5);
+            console.log("Result is : ", result);
+        </script>
+    </body>
+</html>
