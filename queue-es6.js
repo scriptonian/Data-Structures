@@ -30,6 +30,10 @@ class Queue {
     empty() {
         this.items = [];
     }
+
+    isEmpty() {
+        return this.items.length === 0;
+    }
     
     //display all the items in queue
     toString() {

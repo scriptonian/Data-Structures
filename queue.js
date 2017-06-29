@@ -32,6 +32,10 @@ Queue.prototype = {
       this.items = [];
   },
 
+  isEmpty : function() {
+      return this.items.length === 0;
+  }
+
   //display all the items in queue
   toString : function() {
       return this.items.toString();
