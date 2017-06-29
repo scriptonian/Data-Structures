@@ -26,13 +26,13 @@ class Queue {
         return this.items[last];
     }
     
-    //display all the items in queue
-    toString() {
-        return this.items.toString();
-    }
-    
     //empty the queue
     empty() {
         this.items = [];
+    }
+    
+    //display all the items in queue
+    toString() {
+        return this.items.toString();
     }
 }

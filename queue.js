@@ -26,14 +26,14 @@ Queue.prototype = {
       var last = this.items.length - 1;
       return this.items[last];
   },
-  
+
+   //empty the queue
+  empty : function() {
+      this.items = [];
+  },
+
   //display all the items in queue
   toString : function() {
       return this.items.toString();
-  },
-  
-  //empty the queue
-  empty : function() {
-      this.items = [];
   }
 };
