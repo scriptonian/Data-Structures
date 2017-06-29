@@ -12,7 +12,7 @@ class Queue {
     
     //remove item from the queue
     dequeue() {
-        this.items.shift();
+        return this.items.shift();
     }
     
     //return item at the front of the queue

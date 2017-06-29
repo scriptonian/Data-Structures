@@ -13,7 +13,7 @@ Queue.prototype = {
   
   //remove item from the queue
   dequeue : function() {
-      this.items.shift();
+      return this.items.shift();
   },
   
   //return item at the front of the queue
