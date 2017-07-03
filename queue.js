@@ -36,6 +36,10 @@ Queue.prototype = {
       return this.items.length === 0;
   },
 
+  size : function() {
+      return this.items.length;
+  },
+
   //display all the items in queue
   toString : function() {
       return this.items.toString();
