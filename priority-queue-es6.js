@@ -38,7 +38,8 @@ class PriorityQueue {
     
     //return item at the front of the queue
     front() {
-        return this.items[0];
+        const [ front ] = this.items;
+        return front;
     }
     
     //return item at the back of the queue
