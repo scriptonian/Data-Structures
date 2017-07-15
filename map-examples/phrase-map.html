@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Phrase Dictionary</title>
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    </head>
+    <body>
+        
+        <!-- HTML GOES HERE -->
+
+        <script type="text/javascript" src="../map-es5.js"></script>
+        <script type="text/javascript">
+            console.log('starting...');
+            var words = ["yes", "no", "hi", "goodbye", "good", "so-so", "bye", "jerk"],
+                meanings = ["da", "nyet", "privyet", "dasvidania", "horosho", "tak cebe", "poka", "nahal"],
+                phraseBook = new Map();
+
+            words.forEach(function(word, index){
+                if(!phraseBook.hasOwnProperty(word)) {
+                    phraseBook.set(word, meanings[index]);
+                }
+            });
+            //check the phrase Book
+            console.log(phraseBook);
+
+            //sort the phrase book
+            phraseBook.sort();
+            console.log(phraseBook);
+
+        </script>
+    </body>
+</html>
