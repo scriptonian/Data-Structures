@@ -49,12 +49,3 @@ Set.prototype = {
     difference : function(otherSet) {}
 };
 
-//Testing
-var numbers = new Set();
-numbers.add(7);
-numbers.add(8);
-numbers.add(9);
-numbers.add(10);
-console.log(numbers.values()); // returns ["7", "8", "9", "10"]
-numbers.delete(10);
-console.log(numbers.values()); // returns ["7", "8", "9"]
