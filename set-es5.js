@@ -43,9 +43,65 @@ Set.prototype = {
 
         return results;
     },
-    union : function(otherSet) {},
-    subset : function(otherSet) {},
-    intersection : function(otherSet) {},
-    difference : function(otherSet) {}
-};
+    union : function(otherSet) {
+        var unionSet = new Set(),
+            firstSetKeys,
+            secondSetKeys;
+        //iterate first set and add it to union
+        firstSetKeys = this.values();
+        firstSetKeys.forEach(function(key){
+            unionSet.add(key);
+        });
+        //iteration other set and it key/value to union set if only unique
+        secondSetKeys = otherSet.values();
+        secondSetKeys.forEach(function(key){
+            if(unionSet.has(key)) {
+                // do nothing
+            } else {
+                unionSet.add(key);
+            }
+        });
+        return unionSet;
+    },
+    subset : function(otherSet) {
+        var currentKeys = this.values(),
+            otherSetKeys = otherSet.values(),
+            isSubset;
 
+        isSubset = currentKeys.every(function(key){
+            return otherSetKeys.indexOf(key) != -1;
+        });
+        
+        return isSubset;
+    },
+    intersection : function(otherSet) {
+        var interSet = new Set(),
+            firstSetKeys,
+            otherSetKeys;
+
+        firstSetKeys = this.values();
+        otherSetKeys = otherSet.values();
+        firstSetKeys.forEach(function(key){
+            if(otherSetKeys.indexOf(key) != -1) {
+                interSet.add(key);
+            }
+        });
+        
+        return interSet;
+    },
+    difference : function(otherSet) {
+        var diff = new Set(),
+            firstSetKeys,
+            otherSetKeys;
+
+        firstSetKeys = this.values();
+        otherSetKeys = otherSet.values();
+        firstSetKeys.forEach(function(key){
+            if(otherSetKeys.indexOf(key) == -1) {
+                diff.add(key);
+            }
+        });
+
+        return diff;
+    }
+};
