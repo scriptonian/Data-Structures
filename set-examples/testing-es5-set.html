@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <title>Set Examples</title>
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    </head>
+    <body>
+        
+        <!-- HTML GOES HERE -->
+
+        <script type="text/javascript" src="../set-es5.js"></script>
+        <script type="text/javascript">
+            //Testing Union
+            console.log('------------------------Testing Union------------------------');
+            var numbers = new Set();
+            numbers.add(7);
+            numbers.add(8);
+            numbers.add(9);
+            numbers.add(10);
+            //console.log(numbers.values()); // returns ["7", "8", "9", "10"]
+            numbers.delete(10);
+            console.log(numbers.values()); // returns ["7", "8", "9"]
+
+            var otherNumbers = new Set();
+            otherNumbers.add(7);
+            otherNumbers.add(8);
+            otherNumbers.add(14);
+            console.log(otherNumbers.values());
+
+            var finalSet = numbers.union(otherNumbers);
+            console.log(finalSet.values());
+
+            console.log('------------------------Testing Subset------------------------');
+            var setA = new Set();
+            setA.add(2);
+            setA.add(4);
+            setA.add(6);
+            var odd = new Set();
+            odd.add(1);
+            odd.add(3);
+            odd.add(5);
+            var setB = new Set();
+            setB.add(2);
+            setB.add(4);
+            setB.add(6);
+            setB.add(8);
+            console.log(setA.subset(odd));
+            console.log(setA.subset(setB));
+            console.log('------------------------Testing Intersection------------------------');
+            var setC = new Set();
+            setC.add(7);
+            setC.add(8);
+            setC.add(9);
+            var setD = new Set();
+            setD.add(9);
+            setD.add(10);
+            setD.add(11);
+            var cd = setC.intersection(setD);
+            console.log(cd.values());
+            
+            console.log('------------------------Testing Difference------------------------');
+            var setX = new Set();
+            setX.add(5);
+            setX.add(6);
+            setX.add(7);
+            setX.add(8);
+            var setY = new Set();
+            setY.add(6);
+            setY.add(7);
+            setY.add(9);
+            var setZ = setX.difference(setY);
+            console.log(setZ.values());
+        </script>
+    </body>
+</html>
