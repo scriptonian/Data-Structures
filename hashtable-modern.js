@@ -1,16 +1,5 @@
 const _hash = new WeakMap();
 
-class HashNode {
-  constructor(key, value) {
-    this.key = key;
-    this.value = value;
-  }
-
-  toString() {
-    return this.key + ' -> ' + this.value;
-  }
-}
-
 class HashTable {
   constructor(size) {
     //instance variable  
