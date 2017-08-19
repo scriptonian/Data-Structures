@@ -1,11 +1,3 @@
-function HashNode(key, value) {
-    this.key = key;
-    this.value = value;
-    this.toString = function(){
-        return this.key + ' -> ' + this.value;
-    }
-}
-
 function HashTable(size) {
     //store hash data in an array called table
     //accessible to class instance
