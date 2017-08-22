@@ -1,5 +1,6 @@
 /*
-Linked List based on Doubly Linked List Implemenation
+Linked List based on Doubly Linked List Implemenation. Some methods have been modified a bit
+To work with the HashTable Linear probing algorithm.
 */
 
 function Node(element) {
@@ -138,16 +139,22 @@ LinkedList.prototype.removeTail = function() {
     return value;
 };
 
-//this finds and items based on name of element
+//this finds and items based on name of element. This method has been modified to work with hash tables
 LinkedList.prototype.find = function(item) {
+    //console.log('finding... ' + item);
     var currentNode = this.head;
+    var nodeList = [];
+    //console.log('current head of linked list is ' + currentNode.element);
     while(currentNode) {
-        if(currentNode.element === item) {
-            return currentNode;
+        //console.log('current node key: ' + currentNode.element.key);
+        //console.log('current node value: ' + currentNode.element.value);
+        if(currentNode.element.key === item) {
+            //console.log('found something ' + currentNode.element.value);
+            nodeList.push(currentNode);
         }
         currentNode = currentNode.next;
     }
-    return null;
+    return nodeList;
 };
 
 LinkedList.prototype.findPrevious = function(item) {
@@ -247,10 +254,12 @@ LinkedList.prototype.findPositionNode = function(position) {
 }
 
 LinkedList.prototype.removeAt = function(position) {
+    //console.log('length is: ' + this._length - 1);
     var length = this._length - 1,
         positionNode,
         withinBounds = this.withinBounds(position, length);
-        
+    
+    
     if(withinBounds) {
         //if position is 0 then it means remove from Head. no need to reach loop
         if(position === 0) {
@@ -294,7 +303,7 @@ LinkedList.prototype.indexOf = function(element) {
         index = 0;
     
     while(currentNode) {
-        if(currentNode.element === element) {
+        if(currentNode.element.key === element) {
             return index;
         }
         index++;
