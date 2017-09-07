@@ -15,7 +15,7 @@ class BinarySearchTree {
     insert(key) {
         //create a new tree
         let newNode = new TreeNode(key);
-        //if root is not empty set the new node to be the root, else add recursively
+        //if root is empty set the new node to be the root, else add recursively
         this.root === null ? this.root = newNode : this.insertTo(this.root, newNode);
         //increment counter
         this.count++;
@@ -45,7 +45,9 @@ class BinarySearchTree {
     remove(key) {}
     max(){}
     min() {}
-    traverse(){}
+    inOrder(node){}
+    preOrder(node){}
+    postOrder(node){}
     treeCount() {
         return counter;
     }
@@ -56,7 +58,10 @@ class BinarySearchTree {
 
 var bst = new BinarySearchTree();
 bst.insert(60);
-bst.insert(90);
 bst.insert(30);
-bst.insert(70);
+bst.insert(85);
+bst.insert(95);
+bst.insert(80);
+bst.insert(35);
+bst.insert(20);
 console.log(bst);

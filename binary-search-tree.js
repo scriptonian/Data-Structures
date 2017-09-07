@@ -17,7 +17,7 @@ BinarySearchTree.prototype = {
     insert: function(key) {
         //create a new tree
         var newNode = new TreeNode(key);
-        //if root is not empty set the new node to be the root, else add recursively
+        //if root is empty set the new node to be the root, else add recursively
         this.root === null ? this.root = newNode : this.insertTo(this.root, newNode);
         //increment counter
         this.count++;
@@ -45,7 +45,9 @@ BinarySearchTree.prototype = {
     remove: function(key) {},
     max: function(){},
     min: function() {},
-    traverse: function(){},
+    inOrder: function(node){},
+    preOrder: function(node){},
+    postOrder: function(node){},
     treeCount: function() {
         return this.count;
     }
@@ -53,7 +55,10 @@ BinarySearchTree.prototype = {
 
 var bst = new BinarySearchTree();
 bst.insert(60);
-bst.insert(90);
 bst.insert(30);
-bst.insert(70);
+bst.insert(85);
+bst.insert(95);
+bst.insert(80);
+bst.insert(35);
+bst.insert(20);
 console.log(bst);
