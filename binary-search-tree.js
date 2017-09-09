@@ -41,10 +41,42 @@ BinarySearchTree.prototype = {
             }
         }
     },
-    find: function(key) {},
+    find: function(node, key) {
+        var currentNode = node;
+        
+        if (currentNode === null){
+            return false;
+        }
+        if(currentNode.keyValue === key){
+            console.log('value found');
+            return currentNode;
+        }
+        if(key < currentNode.keyValue) {
+            return this.find(currentNode.left, key);
+        }
+        return this.find(currentNode.right, key);
+    },
     remove: function(key) {},
-    max: function(){},
-    min: function() {},
+    max: function(){
+        var currentNode = this.root;
+        if(currentNode !== null) {
+            while(currentNode.right !== null) {
+                currentNode = currentNode.right;
+            }
+            return currentNode.keyValue;
+        }
+        return null;
+    },
+    min: function() {
+        var currentNode = this.root;
+        if(currentNode !== null) {
+            while(currentNode.left !== null) {
+                currentNode = currentNode.left;
+            }
+            return currentNode.keyValue;
+        }
+        return null;
+    },
     inOrder: function(node){
         if (node !== null) {
             //print the left subtree recursively
@@ -94,3 +126,7 @@ console.log("-----");
 bst.preOrder(bst.root);
 console.log("-----");
 bst.postOrder(bst.root);
+
+console.log("Min is: " + bst.min());
+console.log("Max is: " + bst.max());
+console.log(bst.find(bst.root, 30));

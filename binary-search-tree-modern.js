@@ -41,10 +41,46 @@ class BinarySearchTree {
         }
     }
     
-    find(key) {}
+    find(node, key) {
+        let currentNode = node;
+        
+        if (currentNode === null){
+            return false;
+        }
+        if(currentNode.keyValue === key){
+            console.log('value found');
+            return currentNode;
+        }
+        if(key < currentNode.keyValue) {
+            return this.find(currentNode.left, key);
+        }
+        return this.find(currentNode.right, key);
+    }
+
     remove(key) {}
-    max(){}
-    min() {}
+    
+    max(){
+        let currentNode = this.root;
+        if(currentNode !== null) {
+            while(currentNode.right !== null) {
+                currentNode = currentNode.right;
+            }
+            return currentNode.keyValue;
+        }
+        return null;
+    }
+
+    min() {
+        var currentNode = this.root;
+        if(currentNode !== null) {
+            while(currentNode.left !== null) {
+                currentNode = currentNode.left;
+            }
+            return currentNode.keyValue;
+        }
+        return null;
+    }
+
     inOrder(node){
         if (node !== null) {
             //print the left subtree recursively
@@ -87,7 +123,7 @@ class BinarySearchTree {
 }
 
 
-var bst = new BinarySearchTree();
+let bst = new BinarySearchTree();
 bst.insert(60);
 bst.insert(30);
 bst.insert(85);
@@ -101,3 +137,7 @@ console.log("-----");
 bst.preOrder(bst.root);
 console.log("-----");
 bst.postOrder(bst.root);
+
+console.log("Min is: " + bst.min());
+console.log("Max is: " + bst.max());
+console.log(bst.find(bst.root, 30));
