@@ -45,16 +45,47 @@ class BinarySearchTree {
     remove(key) {}
     max(){}
     min() {}
-    inOrder(node){}
-    preOrder(node){}
-    postOrder(node){}
+    inOrder(node){
+        if (node !== null) {
+            //print the left subtree recursively
+            this.inOrder(node.left);
+            //print the root node
+            console.log(node.toString()); 
+            //print the right subtree recursively
+            this.inOrder(node.right);
+        }
+    }
+
+    preOrder(node){
+        if (node !== null) {
+            //print the root node
+            console.log(node.toString());             
+            //print the left subtree recursively
+            this.preOrder(node.left);
+            //print the right subtree recursively
+            this.preOrder(node.right);
+        }
+    }
+    postOrder(node){
+        if (node !== null) {           
+            //print the left subtree recursively
+            this.postOrder(node.left);
+            //print the right subtree recursively
+            this.postOrder(node.right);
+            //print the root node
+            console.log(node.toString());              
+        }
+    }
+
     treeCount() {
         return counter;
     }
+
     toString() {
         return this.keyValue;
     }
 }
+
 
 var bst = new BinarySearchTree();
 bst.insert(60);
@@ -64,4 +95,9 @@ bst.insert(95);
 bst.insert(80);
 bst.insert(35);
 bst.insert(20);
-console.log(bst);
+
+bst.inOrder(bst.root);
+console.log("-----");
+bst.preOrder(bst.root);
+console.log("-----");
+bst.postOrder(bst.root);
