@@ -45,9 +45,36 @@ BinarySearchTree.prototype = {
     remove: function(key) {},
     max: function(){},
     min: function() {},
-    inOrder: function(node){},
-    preOrder: function(node){},
-    postOrder: function(node){},
+    inOrder: function(node){
+        if (node !== null) {
+            //print the left subtree recursively
+            this.inOrder(node.left);
+            //print the root node
+            console.log(node.toString()); 
+            //print the right subtree recursively
+            this.inOrder(node.right);
+        }
+    },
+    preOrder: function(node){
+        if (node !== null) {
+            //print the root node
+            console.log(node.toString());             
+            //print the left subtree recursively
+            this.preOrder(node.left);
+            //print the right subtree recursively
+            this.preOrder(node.right);
+        }
+    },
+    postOrder: function(node){
+        if (node !== null) {           
+            //print the left subtree recursively
+            this.postOrder(node.left);
+            //print the right subtree recursively
+            this.postOrder(node.right);
+            //print the root node
+            console.log(node.toString());              
+        }
+    },
     treeCount: function() {
         return this.count;
     }
@@ -61,4 +88,9 @@ bst.insert(95);
 bst.insert(80);
 bst.insert(35);
 bst.insert(20);
-console.log(bst);
+
+bst.inOrder(bst.root);
+console.log("-----");
+bst.preOrder(bst.root);
+console.log("-----");
+bst.postOrder(bst.root);
