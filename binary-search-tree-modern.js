@@ -210,6 +210,58 @@ class BinarySearchTree {
 
         return true;       
     }
+
+    delete(key) {
+        this.deleteNode(this.root, key);
+    }
+
+    //delete and remove DO THE SAME THING. i want to provide an alternative way of doing remove.
+    //this time using recursion
+    deleteNode(node, nodeToRemove) {
+        if(node === null) {
+            console.log('There is no node root node available');
+        } else if (nodeToRemove < node.keyValue) {
+            node.left = this.deleteNode(node.left, nodeToRemove);
+        } else if (nodeToRemove > node.keyValue) {
+            node.right = this.deleteNode(node.right, nodeToRemove);
+        } else {
+            //found the element to remove
+            if(node.left && node.right) {
+                /*
+                if the element has both children, then the plan here is to replace the key of
+                the node that needs to be deleted with the largest element in the left subtree
+                and then delete the intended node.
+                */
+                let largestInLeftSubtee = this.findMin(node.left);
+                node.keyValue = largestInLeftSubtee.keyValue;
+                node.left = this.deleteNode(node.left, node.keyValue);
+                //decrease the count
+                this.count--;
+            } else {
+                //it has only one child
+                
+                //case one
+                if (node.left === null && node.right === null){
+                    node = null;
+                    //decrease the count
+                    this.count--;
+                    return node;
+                }
+                //case 2
+                if(node.left === null) {
+                    //decrease the count
+                    this.count--;
+                    node = node.right;
+                }
+                if(node.right === null) {
+                    //decrease the count
+                    this.count--;
+                    node = node.left;
+                }
+            }
+        }
+        return node;
+    }
 }
 
 
@@ -247,7 +299,7 @@ bst.insert(8);
 */
 
 //case 3
-
+/*
 bst.insert(4);
 bst.insert(2);
 bst.insert(6);
@@ -256,7 +308,16 @@ bst.insert(3);
 bst.insert(5);
 bst.insert(8);
 bst.insert(7);
+*/
 
+//case 4
+bst.insert(4);
+bst.insert(2);
+bst.insert(8);
+bst.insert(5);
+bst.insert(1);
+bst.insert(7);
+bst.insert(6);
 
 /*
 bst.inOrder(bst.root);
