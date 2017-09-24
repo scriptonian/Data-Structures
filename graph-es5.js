@@ -11,16 +11,18 @@ Graph.prototype = {
         //holds the connections to the list
         this.adjacentList.set(v, []);
     },
-    //helper method for getting a vertex from the adjacency list
-    getAdjacencyListVertex: function(vertex){
-        return this.adjacentList.get(vertex);
-    },
     //our edges hold connections to vertices. this adds an edge from vertex 
     //U to vertext V. this means that V will be in the adjacency list of U
-    addEdge: function(u, v){
+    addEdge: function(u, v) {
+        var that = this;
+
+        //helper method for getting a vertex from the adjacency list
+        var getAdjacencyListVertex = function(vertex) {
+            return that.adjacentList.get(vertex);
+        };
         //first get the u vertex to you can push into its list
-        var uVertex = this.getAdjacencyListVertex(u),
-            vVertex = this.getAdjacencyListVertex(v);
+        var uVertex = getAdjacencyListVertex(u),
+            vVertex = getAdjacencyListVertex(v);
         /*
         we are working with undirected graphs here so we put both vertices
         into each others adjacency list. If this was a directed graph we

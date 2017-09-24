@@ -12,17 +12,17 @@ class Graph {
         this.adjacentList.set(v, []);
     }
 
-    //helper method for getting a vertex from the adjacency list
-    getAdjacencyListVertex(v) {
-        return this.adjacentList.get(v);
-    }
-
     //our edges hold connections to vertices. this adds an edge from vertex 
     //U to vertext V. this means that V will be in the adjacency list of U
     addEdge(u, v) {
+        //helper method for getting a vertex from the adjacency list
+        let getAdjacencyListVertex = (vertex) => {
+            return this.adjacentList.get(vertex);
+        };
+
         //first get the u vertex to you can push into its list
-        let uVertex = this.getAdjacencyListVertex(u),
-            vVertex = this.getAdjacencyListVertex(v);
+        let uVertex = getAdjacencyListVertex(u),
+            vVertex = getAdjacencyListVertex(v);
         
         /*
         we are working with undirected graphs here so we put both vertices
