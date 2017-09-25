@@ -11,7 +11,6 @@ class Graph {
         //holds the connections to the list
         this.adjacentList.set(v, []);
     }
-
     //our edges hold connections to vertices. this adds an edge from vertex 
     //U to vertext V. this means that V will be in the adjacency list of U
     addEdge(u, v) {
@@ -37,9 +36,9 @@ class Graph {
 
     toString() {
         //compare this to ES5. this is sooo much easier
-        for(let [key, value] of this.adjacentList) {
+        this.adjacentList.values().forEach(function(value, key, map) {
             console.log(`${key} => ${value}`);
-        }
+        });
     }
 }
 
