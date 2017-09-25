@@ -41,7 +41,7 @@ Graph.prototype = {
         //but for ES2015 and beyond it will be much easier. For ES5
         //we use a foreach
         var mapValues = [];
-        this.adjacentList.forEach(function(value, key, map) {
+        this.adjacentList.values().forEach(function(value, key, map) {
             mapValues.push(value);
         });
 
