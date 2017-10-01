@@ -66,7 +66,7 @@ Graph.prototype = {
             });
             color[queueFrontVertex] = 'black';
             console.log(queueFrontVertex + ' was visited');
-        }
+        }       
     },
 
     toString: function() {
