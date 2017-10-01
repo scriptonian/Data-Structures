@@ -37,12 +37,11 @@ class Graph {
     breathFirstSearch(startingVertex) {
         let color = [],
             queue = new Queue(),
-            that = this,
             isEmptyQueue = true,
             //create an array of object
             setVertexColors = () => {
-                for(let i = 0; i < that.vertices.length; i++) {
-                    color[that.vertices[i]] = 'white';
+                for(let i = 0; i < this.vertices.length; i++) {
+                    color[this.vertices[i]] = 'white';
                 }
                 return color;
             };
@@ -53,11 +52,11 @@ class Graph {
         //continously check the queue and performs the following operations
         while(!queue.isEmpty()) {
             //get vertex in the front of queue
-            var queueFrontVertex = queue.dequeue();
+            let queueFrontVertex = queue.dequeue();
             //set the color to grey since is now visited
             color[queueFrontVertex] = 'grey';
             //get its adjacency list
-            var frontVertexAdjLst = this.getAdjacencyListVertex(queueFrontVertex);
+            let frontVertexAdjLst = this.getAdjacencyListVertex(queueFrontVertex);
             frontVertexAdjLst.forEach(function(adjVertex){
                 if(color[adjVertex] === 'white') {
                     //if color is white change to grey because we have now discovered it
