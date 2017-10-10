@@ -2,6 +2,7 @@ class Graph {
     constructor() {
         this.vertices = [];
         this.adjacentList = new Map();
+        this.numberOfEdges = 0;
     }
 
     addVertex(v) {
@@ -32,21 +33,27 @@ class Graph {
         uVertex.push(v);
         //Step 2: push U into V's list
         vVertex.push(u); 
+        //increment count
+        this.numberOfEdges++;
     }
 
     breathFirstSearch(startingVertex) {
         let color = [],
+            distances = [],
+            edgeTo = [], 
             queue = new Queue(),
             isEmptyQueue = true,
             //create an array of object
-            setVertexColors = () => {
+            setVertexColorsAndEdges = () => {
                 for(let i = 0; i < this.vertices.length; i++) {
                     color[this.vertices[i]] = 'white';
+                    distances[this.vertices[i]] = 0;
+                    edgeTo[this.vertices[i]] = null;
                 }
                 return color;
             };
-        //set colors on all vertices
-        setVertexColors();
+        //set colors and distances on all vertices
+        setVertexColorsAndEdges();
         //enqueue vertex onto queue
         queue.enqueue(startingVertex);
         //continously check the queue and performs the following operations
@@ -61,6 +68,10 @@ class Graph {
                 if(color[adjVertex] === 'white') {
                     //if color is white change to grey because we have now discovered it
                     color[adjVertex] = 'grey';
+                    //increment count on the vertex weight
+                    distances[adjVertex] = distances[queueFrontVertex] + 1;
+                    //record the path that lead from one vertex to another vertex
+                    edgeTo[adjVertex] = queueFrontVertex;
                     //next add this to the queue
                     queue.enqueue(adjVertex);
                 }
@@ -68,6 +79,80 @@ class Graph {
             color[queueFrontVertex] = 'black';
             console.log(queueFrontVertex + ' was visited');
         }
+        //Output Shortest distance based on number of hops
+        for (var i in distances) {
+            //console.log('Shortest Distance from ' + startingVertex + ' to ' + i + ' is in ' + distances[i] + ' step(s)');
+        }
+
+        return {
+            distances : distances,
+            edgeTo : edgeTo
+        }; 
+    }
+
+    vertexExist(v) {
+        return this.vertices.indexOf(v) === 0;
+    }
+
+    pathFromToAll(fromVertex, bfs) {
+        if(!this.vertexExist(fromVertex)) {
+            return console.log('Starting Vertex not found');
+        }
+
+        for(let i = 0; i < this.vertices.length; i++) {
+            let currentVertex = this.vertices[i],
+                finalPath = new Stack();
+            for(let j = currentVertex; j !== fromVertex; j = bfs.edgeTo[j]) {
+                finalPath.push(j);
+            }
+            //finally push the starting vertex to stack
+            finalPath.push(fromVertex);
+            let vStrings = finalPath.pop();
+            while(!finalPath.isEmpty()) {
+                vStrings += ' - ' + finalPath.pop();
+            }
+            console.log(vStrings);
+        }
+    }
+
+    pathFromTo(fromVertex, toVertex) {
+        let queue = new Queue(),
+            visited = [],
+            paths = [],
+            pathString = '',
+            finalPath = [];
+        queue.enqueue(fromVertex);
+        visited[fromVertex] = true;
+
+        while(!queue.isEmpty()) {
+            //get vertex in the front of queue
+            let queueFrontVertex = queue.dequeue(),
+                edges = this.getAdjacencyListVertex(queueFrontVertex);
+            //console.log(edges);
+            for(let i = 0; i < edges.length; i++) {
+                let currentEdge = edges[i];
+                if(!visited[currentEdge]) {
+                    //mark them as visited
+                    visited[currentEdge] = true;
+                    queue.enqueue(currentEdge);
+                    paths[currentEdge] = queueFrontVertex;
+                    //console.log(paths[edges[currentEdge]]);
+                }
+            }
+        }
+        
+        if(!visited[toVertex]) {
+            return undefined;
+        }
+
+        for(var j = toVertex; j !== fromVertex; j = paths[j]) {
+            finalPath.push(j);
+        }
+        //finally push the starting vertex to stack
+        finalPath.push(fromVertex);
+
+        pathString = finalPath.reverse().join('-');
+        return pathString;
     }
 
     toString() {
@@ -98,4 +183,10 @@ graph.addEdge('M', 'N');
 graph.addEdge('M', 'F');
 
 //graph.toString();
-graph.breathFirstSearch('K');
+//graph.breathFirstSearch('K');
+
+var startVertex = vertices[0];
+var bfs = graph.breathFirstSearch(startVertex);
+graph.pathFromToAll(startVertex, bfs);
+var shortestPathFromTo = graph.pathFromTo('T', 'F');
+console.log("Path String: ", shortestPathFromTo);

@@ -1,6 +1,7 @@
 function Graph() {
     this.vertices = [];
     this.adjacentList = new Map();
+    this.numberOfEdges = 0;
 }
 
 Graph.prototype = {
@@ -16,7 +17,7 @@ Graph.prototype = {
         return this.adjacentList.get(vertex);        
     },
     //our edges hold connections to vertices. this adds an edge from vertex 
-    //U to vertext V. this means that V will be in the adjacency list of U
+    //U to vertex V. this means that V will be in the adjacency list of U
     addEdge: function(u, v) {
         //first get the u vertex to you can push into its list
         var uVertex = this.getAdjacencyListVertex(u),
@@ -30,22 +31,26 @@ Graph.prototype = {
         uVertex.push(v);
         //Step 2: push U into V's list
         vVertex.push(u);  
+        //increment count
+        this.numberOfEdges++;
     },
 
     breathFirstSearch: function(startingVertex) {
         var color = [],
+            distances = [],
+            edgeTo = [],          
             queue = new Queue(),
-            that = this,
             isEmptyQueue = true,
             //create an array of object
-            setVertexColors = function() {
-                for(var i = 0; i < that.vertices.length; i++) {
-                    color[that.vertices[i]] = 'white';
+            setVertexColorsAndEdges = function() {
+                for(var i = 0; i < this.vertices.length; i++) {
+                    color[this.vertices[i]] = 'white';
+                    distances[this.vertices[i]] = 0;
+                    edgeTo[this.vertices[i]] = null;
                 }
-                return color;
             };
-        //set colors on all vertices
-        setVertexColors();
+        //set colors and distances on all vertices
+        setVertexColorsAndEdges();
         //enqueue vertex onto queue
         queue.enqueue(startingVertex);
         //continously check the queue and performs the following operations
@@ -60,13 +65,92 @@ Graph.prototype = {
                 if(color[adjVertex] === 'white') {
                     //if color is white change to grey because we have now discovered it
                     color[adjVertex] = 'grey';
+                    //increment count on the vertex weight
+                    distances[adjVertex] = distances[queueFrontVertex] + 1;
+                    //record the path that lead from one vertex to another vertex
+                    edgeTo[adjVertex] = queueFrontVertex;
                     //next add this to the queue
                     queue.enqueue(adjVertex);
                 }
             });
             color[queueFrontVertex] = 'black';
-            console.log(queueFrontVertex + ' was visited');
-        }       
+            //console.log(queueFrontVertex + ' was visited');
+        }
+        //Output Shortest distance based on number of hops
+        for (var i in distances) {
+            //console.log('Shortest Distance from ' + startingVertex + ' to ' + i + ' is in ' + distances[i] + ' step(s)');
+        }
+
+        return {
+            distances : distances,
+            edgeTo : edgeTo
+        };   
+    },
+
+    vertexExist: function(v) {
+        return this.vertices.indexOf(v) === 0;
+    },
+
+    pathFromToAll: function(fromVertex, bfs) {
+        if(!this.vertexExist(fromVertex)) {
+            return console.log('Starting Vertex not found');
+        }
+
+        for(var i = 0; i < this.vertices.length; i++) {
+            var currentVertex = this.vertices[i];
+            var finalPath = new Stack();
+            for(var j = currentVertex; j !== fromVertex; j = bfs.edgeTo[j]) {
+                finalPath.push(j);
+            }
+            //finally push the starting vertex to stack
+            finalPath.push(fromVertex);
+            var vStrings = finalPath.pop();
+            while(!finalPath.isEmpty()) {
+                vStrings += ' - ' + finalPath.pop();
+            }
+            console.log(vStrings);
+        }
+    },
+
+    pathFromTo: function(fromVertex, toVertex) {
+        var queue = new Queue();
+        queue.enqueue(fromVertex);
+        var visited = [];
+        visited[fromVertex] = true;
+        var paths = [];
+
+        while(!queue.isEmpty()) {
+            //get vertex in the front of queue
+            var queueFrontVertex = queue.dequeue();
+            var edges = this.getAdjacencyListVertex(queueFrontVertex);
+            //console.log(edges);
+            for(var i = 0; i < edges.length; i++) {
+                var currentEdge = edges[i];
+                if(!visited[currentEdge]) {
+                    //mark them as visited
+                    visited[currentEdge] = true;
+                    queue.enqueue(currentEdge);
+                    paths[currentEdge] = queueFrontVertex;
+                    //console.log(paths[edges[currentEdge]]);
+                }
+            }
+        }
+        
+        if(!visited[toVertex]) {
+            return undefined;
+        }
+
+        var finalPath = [];
+       
+        for(var j = toVertex; j !== fromVertex; j = paths[j]) {
+            finalPath.push(j);
+        }
+        
+        //finally push the starting vertex to stack
+        finalPath.push(fromVertex);
+
+        var pathString = finalPath.reverse().join('-');
+        return pathString;
     },
 
     toString: function() {
@@ -115,4 +199,10 @@ graph.addEdge('M', 'N');
 graph.addEdge('M', 'F');
 
 //graph.toString();
-graph.breathFirstSearch('K');
+//graph.breathFirstSearch('K');
+
+var startVertex = vertices[0];
+var bfs = graph.breathFirstSearch(startVertex);
+graph.pathFromToAll(startVertex, bfs);
+//var pathString = graph.pathFromTo('T', 'F');
+//console.log(pathString);
