@@ -94,7 +94,7 @@ class Graph {
         return this.vertices.indexOf(v) === 0;
     }
 
-    pathFromToAll(fromVertex, bfs) {
+    shortestPathToAll(fromVertex, bfs) {
         if(!this.vertexExist(fromVertex)) {
             return console.log('Starting Vertex not found');
         }
@@ -115,7 +115,7 @@ class Graph {
         }
     }
 
-    pathFromTo(fromVertex, toVertex) {
+    shortestPathFromTo(fromVertex, toVertex) {
         let queue = new Queue(),
             visited = [],
             paths = [],
@@ -187,6 +187,6 @@ graph.addEdge('M', 'F');
 
 var startVertex = vertices[0];
 var bfs = graph.breathFirstSearch(startVertex);
-graph.pathFromToAll(startVertex, bfs);
-var shortestPathFromTo = graph.pathFromTo('T', 'F');
+graph.shortestPathToAll(startVertex, bfs);
+var shortestPathFromTo = graph.shortestPathFromTo('T', 'F');
 console.log("Path String: ", shortestPathFromTo);

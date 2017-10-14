@@ -91,7 +91,7 @@ Graph.prototype = {
         return this.vertices.indexOf(v) === 0;
     },
 
-    pathFromToAll: function(fromVertex, bfs) {
+    shortestPathToAll: function(fromVertex, bfs) {
         if(!this.vertexExist(fromVertex)) {
             return console.log('Starting Vertex not found');
         }
@@ -112,7 +112,7 @@ Graph.prototype = {
         }
     },
 
-    pathFromTo: function(fromVertex, toVertex) {
+    shortestPathFromTo: function(fromVertex, toVertex) {
         var queue = new Queue();
         queue.enqueue(fromVertex);
         var visited = [];
@@ -203,6 +203,6 @@ graph.addEdge('M', 'F');
 
 var startVertex = vertices[0];
 var bfs = graph.breathFirstSearch(startVertex);
-graph.pathFromToAll(startVertex, bfs);
-//var pathString = graph.pathFromTo('T', 'F');
-//console.log(pathString);
+graph.shortestPathToAll(startVertex, bfs);
+//var shortestPathFromTo = graph.shortestPathFromTo('T', 'F');
+//console.log("Path String: ", shortestPathFromTo);
