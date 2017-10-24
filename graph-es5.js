@@ -159,6 +159,75 @@ Graph.prototype = {
         console.log(finalString);
     },
 
+    DFS : function(v, color) {
+        console.log('Visiting Vertex: ' + v);
+        //change the color to grey
+        color[v] = 'grey';
+        //get its adjacency list
+        var curVertexAdjLst = this.getAdjacencyListVertex(v);
+        //go through the list, if you there unvisited linked 
+        //follow the path to the end for each of
+        var that = this;
+        curVertexAdjLst.forEach(function(listVertex){
+            if(color[listVertex] === 'white') {
+                that.DFS(listVertex, color);
+            }
+        });
+        //change the color to black. we are done
+        color[v] = 'black';
+    },
+
+    DFSTraversal: function() {
+        var color = [],        
+        //set all vertices to white before search begin.
+        initializeVertexColors = function() {
+            for(var i = 0; i < this.vertices.length; i++) {
+                color[this.vertices[i]] = 'white';                    
+            }
+        };
+        //call the function to initialize colors
+        initializeVertexColors();
+        //run through all the vertices
+        for(var i = 0; i < this.vertices.length; i++) {
+            if(color[vertices[i]] === 'white') {
+                this.DFS(vertices[i], color);
+            }
+        }
+    },
+    //DFS with a stack instead of recursion
+    depthFirstWithStack: function(startingVertex) {
+        var color = [], 
+            stack = new Stack();
+        //set all vertices to white before search begin.
+        initializeVertexColors = function() {
+            for(var i = 0; i < this.vertices.length; i++) {
+                color[this.vertices[i]] = 'white';
+            }
+        };
+        //call the function to initialize colors
+        initializeVertexColors();
+        //putsh vertex onto stack
+        stack.push(startingVertex);
+        //continue doing this as long as the stack is not empty
+        while(!stack.isEmpty()) {
+            //get vertex in the front of stack
+            var stackFrontVertex = stack.pop();
+            if(color[stackFrontVertex] !== 'black') {
+                color[stackFrontVertex] = 'grey';
+                console.log('Visiting Vertex: ' + stackFrontVertex);
+                //get its adjacency list
+                var frontVertexAdjLst = this.getAdjacencyListVertex(stackFrontVertex);
+                //loop through list
+                for(var i = 0; i < frontVertexAdjLst.length; i++) {
+                    if (color[frontVertexAdjLst[i]] === 'white') {
+                        stack.push(frontVertexAdjLst[i]);
+                    }
+                }
+                color[stackFrontVertex] = 'black';
+            }
+        }
+    },
+
     toString: function() {
         //mapValues is used to store all map values. which are arrays
         //we dont use the .values method here since that returns a
@@ -207,9 +276,12 @@ graph.addEdge('M', 'F');
 //graph.toString();
 //graph.breathFirstSearch('K');
 
-var source = vertices[0];
-var destination = vertices[5];
-var bfs = graph.breathFirstSearch(source);
+//var source = vertices[0];
+//var destination = vertices[5];
+//var bfs = graph.breathFirstSearch(source);
 //console.log(bfs);
 //graph.shortest_path(bfs, source, destination);
-graph.shortestPathToAll(source, bfs);
+//graph.shortestPathToAll(source, bfs);
+
+//var dfs = graph.DFSTraversal();
+var dsf_stack = graph.depthFirstWithStack('K');
