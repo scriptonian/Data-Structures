@@ -168,7 +168,6 @@ class Graph {
         var curVertexAdjLst = this.getAdjacencyListVertex(v);
         //go through the list, if you there unvisited linked 
         //follow the path to the end for each of
-        //var that = this;
         curVertexAdjLst.forEach((listVertex) => {
             if(color[listVertex] === 'white') {
                 this.DFS(listVertex, color);
