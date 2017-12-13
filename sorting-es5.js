@@ -201,7 +201,7 @@ ScriptoniteSort.prototype = {
         //create sub lists and do sorting
         for(var i = startIndex; i < dataLength; i += increment) {
             //console.log(this.arr[i]);
-            for(j = Math.min(i + increment, dataLength - 1); j - increment >= 0; j = j - increment) {
+            for(var j = Math.min(i + increment, dataLength - 1); j - increment >= 0; j = j - increment) {
                 if(this.arr[j] < this.arr[j - increment]) {
                     this.swap(this.arr, j, j - increment);
                 } else {
