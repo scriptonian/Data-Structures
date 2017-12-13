@@ -175,7 +175,27 @@ ScriptoniteSort.prototype = {
     },
 
     //use this insertion sort when working with shell sort
-    insertionSortEnhanced: function(datalist, startIndex, increment) {
+    insertionSortGap: function(datalist, startIndex, increment) {
+        //set length of array
+        var dataLength = datalist.length;
+        //create sub lists and do sorting
+        for (var i = startIndex + increment; i < dataLength; i += increment) {
+            var temp = this.arr[i];
+            //placeholder is where we will insert
+            var placeHolderIndex = i;
+            //like the insertion sort method we do the same here only using the increment values
+            while( (placeHolderIndex >= increment) && (this.arr[placeHolderIndex - increment] > temp) ) {
+                //if condition is met then keep shifting the values
+                this.arr[placeHolderIndex] = this.arr[placeHolderIndex - increment];
+                placeHolderIndex -= increment;
+            }
+            //after shifting is all done, insert the value into right location
+            this.arr[placeHolderIndex] = temp;
+        }
+    },
+
+    //this method uses two for loops instead of a while within a loop
+    insertionSortGapAlternative: function(datalist, startIndex, increment) {
         //set length of array
         var dataLength = datalist.length;
         //create sub lists and do sorting
@@ -187,11 +207,8 @@ ScriptoniteSort.prototype = {
                 } else {
                     break;
                 }
-                console.log("---->" + this.arr.toString());
-                console.log("<---------------------------------->");
             }
         }
-        console.log("---->" + this.arr.toString());
     },
 
     shellSort: function(datalist) {
@@ -201,11 +218,12 @@ ScriptoniteSort.prototype = {
          this.validateCollection(this.arr);
         //set the increment
         var increment = Math.floor(this.arr.length / 2);
-
+        //a long as increment is greater than 1 call the modified insertion sort with gap
         while(increment >= 1) {
-            //console.log(increment);
             for(var i = 0; i < increment; i++) {
-                this.insertionSortEnhanced(datalist, i, increment);
+                this.insertionSortGap(datalist, i, increment);
+                //or call the other method insertion sort method
+                //this.insertionSortGapAlternative(datalist, i, increment);
             }
             //reduce the increment. we want to get to an increment on 1. which means that the 
             //collection is nearly sorted.
@@ -220,4 +238,4 @@ var myArr = [9, 11, 5, 1, 7, 2, 15, 1, 8, 6];
 //var myArr = [1, 7, 4, 0, 5, 3];
 //var myArr = [64, 25, 12, 22, 11];
 var collection = new ScriptoniteSort();
-collection.shellSort(myArr);
+collection.insertionSort(myArr);
