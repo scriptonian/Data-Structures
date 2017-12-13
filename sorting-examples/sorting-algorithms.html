@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Javascript Bubble Sort</title>
+        <!-- <script src="../sorting-es5.js"></script> -->
+        <script src="../sorting-modern.js"></script>
+        <script>
+            /*
+            define data collection
+            */
+            //var myArr = [9, 11, 5, 1, 7, 2, 15, 1];
+            //var myArr = [1, 7, 4, 0, 5, 3];
+            var myArr = [64, 25, 12, 22, 11];
+            //var myArr = [1, 1, 2, 5, 7, 9, 11, 15]; //this is already sorted
+
+            /*
+            instantiate sorting class
+            */
+            var collection = new ScriptoniteSort();
+            
+            /*
+            call the normal bubble sort
+            */
+            //collection.bubbleSort(myArr, true);
+
+            /*
+            call the enhanced better bubble sort
+            */
+            //collection.bubbleSortEnhanced(myArr, true);
+            
+            /*
+            call the selection sort
+            */
+            //collection.selectionSort(myArr);
+
+            /*
+            call the insertion sort
+            */
+            //collection.insertionSort(myArr);
+            collection.insertionSortAlternative(myArr);
+            
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>
