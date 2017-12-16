@@ -231,11 +231,63 @@ ScriptoniteSort.prototype = {
         }
         //display or return final array
         console.log("---->" + this.arr.toString());
+    },
+
+    //split the datalist recursively
+    mergeSplit: function(datalist) {
+        if (datalist.length === 1) return datalist;
+
+        var dataLength = datalist.length,
+            middle = Math.floor(dataLength / 2),
+        
+            leftArray = datalist.slice(0, middle),
+            rightArray = datalist.slice(middle);
+
+        return this.merge(this.mergeSplit(leftArray), this.mergeSplit(rightArray));
+    },
+
+    //take two datalists and merge them into one sorted list
+    merge: function(left, right){
+        //store sorted result here
+        var results = [];
+        
+        //as long as there are elements in both passed in arrays, 
+        //at the to result array in sorted order.
+        while(left.length && right.length) {
+            var currentMin;
+            //we compare the two arrays and strip out the minimum of first items
+            if(left[0] < right[0]) {
+                //shift will remove the element from the array completely.
+                //this way on the next iteration there is a new number. thats why we use 0 index
+                currentMin = left.shift();
+            } else {
+                currentMin = right.shift();
+            }
+            results.push(currentMin);
+        }
+
+        //if the left array has any elements in it then add those to the results
+        if(left.length) {
+            //if there is nothing in the left, then the remaining is in the right
+            results = results.concat(left);
+        } else {
+            //else it means left is empty and only right remains
+            results = results.concat(right);
+        }
+        //return the entire array to caller
+        return results;
+    },
+
+    mergeSort: function(datalist) {
+        //store the results
+        var results = this.mergeSplit(datalist);
+        console.log("----> " + results);
     }
 };
 
-var myArr = [9, 11, 5, 1, 7, 2, 15, 1, 8, 6];
+//var myArr = [9, 11, 5, 1, 7, 2, 15, 1, 8, 6];
+var myArr = [6000, 34, 203, 3, 746, 200, 984, 198, 764, 1, 9, 1];
 //var myArr = [1, 7, 4, 0, 5, 3];
 //var myArr = [64, 25, 12, 22, 11];
 var collection = new ScriptoniteSort();
-collection.insertionSort(myArr);
+collection.mergeSort(myArr);
