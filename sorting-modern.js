@@ -242,4 +242,50 @@ class ScriptoniteSort {
         const results = this.mergeSplit(datalist);
         console.log("----> " + results);
     }
+
+    partition(datalist, low, high) {
+        let pivot = datalist[low]; //alternatively we can choose the middle datalist[Math.floor((right + left) / 2)]
+        
+        while(low <= high) {
+            while(datalist[low] < pivot) {
+                low++;
+            }
+            while(datalist[high] > pivot){
+                high--;
+            }
+            if(low <= high) {
+                this.swap(datalist, low, high);
+                low++;
+                high--;
+            }
+        }
+
+        return low;
+    }
+
+    quickRecursion(datalist, low, high) {
+        //return if low is greater or equal to hight
+        if(low > high) { return; }
+        //set high and low marks
+        let pivotPoint;
+        
+        pivotPoint = this.partition(datalist, low, high);
+        
+        if(low < pivotPoint - 1){
+            this.quickRecursion(datalist, low, pivotPoint - 1);
+        }
+        if(pivotPoint < high) {
+            this.quickRecursion(datalist, pivotPoint, high);
+        }
+    }
+
+    quickSort(datalist) {
+        let low = 0,
+            high = datalist.length -1;
+
+        //begin the quick sort algorithm by calling the recursive function
+        this.quickRecursion(datalist, low, high);
+        //display final results
+        console.log(datalist);
+    }
 }
