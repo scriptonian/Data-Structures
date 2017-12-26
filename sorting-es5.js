@@ -282,12 +282,60 @@ ScriptoniteSort.prototype = {
         //store the results
         var results = this.mergeSplit(datalist);
         console.log("----> " + results);
+    },
+
+    
+    partition: function(datalist, low, high) {
+        var pivot = datalist[low]; //alternatively we can choose the middle datalist[Math.floor((right + left) / 2)]
+        
+        while(low <= high) {
+            while(datalist[low] < pivot) {
+                low++;
+            }
+            while(datalist[high] > pivot){
+                high--;
+            }
+            if(low <= high) {
+                this.swap(datalist, low, high);
+                low++;
+                high--;
+            }
+        }
+
+        return low;
+    },
+
+    quickRecursion: function(datalist, low, high) {
+        //return if low is greater or equal to hight
+        if(low > high) { return; }
+        //set high and low marks
+        var pivotPoint;
+        
+        pivotPoint = this.partition(datalist, low, high);
+        
+        if(low < pivotPoint - 1){
+            this.quickRecursion(datalist, low, pivotPoint - 1);
+        }
+        if(pivotPoint < high) {
+            this.quickRecursion(datalist, pivotPoint, high);
+        }
+    },
+
+    quickSort : function(datalist) {
+        var low = 0,
+            high = datalist.length -1;
+
+        //begin the quick sort algorithm by calling the recursive function
+        this.quickRecursion(datalist, low, high);
+        //display final results
+        console.log(datalist);
     }
-};
+
+};//prototype end
 
 //var myArr = [9, 11, 5, 1, 7, 2, 15, 1, 8, 6];
 var myArr = [6000, 34, 203, 3, 746, 200, 984, 198, 764, 1, 9, 1];
 //var myArr = [1, 7, 4, 0, 5, 3];
 //var myArr = [64, 25, 12, 22, 11];
 var collection = new ScriptoniteSort();
-collection.mergeSort(myArr);
+collection.quickSort(myArr);
