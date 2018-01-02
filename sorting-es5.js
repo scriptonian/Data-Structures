@@ -321,7 +321,7 @@ ScriptoniteSort.prototype = {
         }
     },
 
-    quickSort : function(datalist) {
+    quickSort: function(datalist) {
         var low = 0,
             high = datalist.length -1;
 
@@ -329,6 +329,11 @@ ScriptoniteSort.prototype = {
         this.quickRecursion(datalist, low, high);
         //display final results
         console.log(datalist);
+    },
+
+    heapSort: function() {
+        //Please see report for heapsort.js
+        console.log('Please use heapsort.js');
     }
 
 };//prototype end

@@ -288,4 +288,9 @@ class ScriptoniteSort {
         //display final results
         console.log(datalist);
     }
+
+    heapSort() {
+        //please see heapsort.js for heap sort
+        console.log('Please use heapsort.js')
+    }
 }
