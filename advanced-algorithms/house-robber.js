@@ -6,6 +6,7 @@ function rob_recursive(count, nums) {
     //base case
     if(count === 0) return 0;
     if(count === 1) return nums[0];
+    if(count === 2) Math.max(nums[0], nums[1]);
     var maxValue = 0;
     /*
     case for when we dont steal house "i". by the end of this recursive call we know what  
